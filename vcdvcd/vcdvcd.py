@@ -96,6 +96,7 @@ class VCDVCD(object):
         self.signals = []
         self.timescale = {}
         self.signal_changed = False
+        self.scopes = []
 
         self._store_tvs = store_tvs
 
@@ -106,7 +107,6 @@ class VCDVCD(object):
         all_sigs = not signals
         cur_sig_vals = {}
         hier = []
-        scopes = []
         num_sigs = 0
         time = 0
         first_time = True
@@ -142,7 +142,7 @@ class VCDVCD(object):
                     callbacks.enddefinitions(self, signals, cur_sig_vals)
                 elif '$scope' in line:
                     hier.append(line.split()[2])
-                    scopes.append('.'.join(hier) + '.')
+                    self.scopes.append('.'.join(hier))
                 elif '$upscope' in line:
                     hier.pop()
                 elif '$var' in line:
